@@ -51,6 +51,22 @@ export default function Admin() {
     }
   }
 
+  async function handleDelete(id, nom) {
+    if (!window.confirm(`Supprimer la souscription de ${nom} ? Cette action est irréversible.`)) return
+    const storedPwd = sessionStorage.getItem('propice_admin_pwd')
+    if (IS_NETLIFY) {
+      await fetch('/api/delete-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, pwd: storedPwd }),
+      })
+    } else {
+      const all = JSON.parse(localStorage.getItem('propice_souscriptions') || '[]')
+      localStorage.setItem('propice_souscriptions', JSON.stringify(all.filter(s => s.id !== id)))
+    }
+    setSubs(prev => prev.filter(s => s.id !== id))
+  }
+
   async function handleStatutClick(id, currentStatut) {
     const idx = STATUTS.indexOf(currentStatut)
     const next = STATUTS[(idx + 1) % STATUTS.length]
@@ -156,7 +172,7 @@ export default function Admin() {
             <table className="w-full text-sm font-inter border-collapse">
               <thead>
                 <tr className="border-b-2 border-[#111111]">
-                  {['Nom', 'Email', 'Type', 'Montant', 'Parts', 'Date', 'Statut', 'PDF'].map(h => (
+                  {['Nom', 'Email', 'Type', 'Montant', 'Parts', 'Date', 'Statut', 'PDF', ''].map(h => (
                     <th key={h} className="font-display tracking-wide text-left py-3 px-2 text-gray-500 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -189,6 +205,15 @@ export default function Admin() {
                         className="font-display text-xs border border-[#111111] px-2 py-1 hover:bg-[#111111] hover:text-white transition-colors"
                       >
                         PDF
+                      </button>
+                    </td>
+                    <td className="py-3 px-2">
+                      <button
+                        onClick={() => handleDelete(s.id, `${s.prenom} ${s.nom}`)}
+                        className="text-red-400 hover:text-red-600 transition-colors text-lg leading-none"
+                        title="Supprimer"
+                      >
+                        ×
                       </button>
                     </td>
                   </tr>
