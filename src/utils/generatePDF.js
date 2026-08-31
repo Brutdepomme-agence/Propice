@@ -102,7 +102,7 @@ export function generateBulletin(data) {
   y += 6
   doc.setFontSize(9)
   doc.setFont('helvetica', 'italic')
-  const instructionText = `Ce bulletin doit être signé et renvoyé à ${EMAIL} accompagné du justificatif de virement.`
+  const instructionText = `Pour toute question, contactez-nous à ${EMAIL}.`
   const splitInstruction = doc.splitTextToSize(instructionText, contentW)
   doc.text(splitInstruction, margin, y)
   y += splitInstruction.length * 5 + 4
