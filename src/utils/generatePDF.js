@@ -108,23 +108,14 @@ export function generateBulletin(data) {
   y += splitInstruction.length * 5 + 4
   doc.setFont('helvetica', 'normal')
 
-  doc.text('Lu et approuvé — Signature :', margin, y)
-  y += 8
-  line(margin, y, margin + 80, y)
-  y += 10
-  doc.text('Fait à ______________________ le ________________________', margin, y)
-  y += 10
-
   line(margin, y, W - margin, y)
   y += 5
   doc.setFontSize(8)
   doc.setTextColor(100, 100, 100)
   doc.text(`Document généré le ${new Date().toLocaleDateString('fr-FR')} — Réf. ${data.id || '------'}`, margin, y)
-  y += 4
-  doc.text('Ce document ne constitue pas un reçu de paiement.', margin, y)
   y += 5
   doc.setFont('helvetica', 'italic')
-  const legal = 'Ce formulaire recueille votre intention de souscription à titre de futur sociétaire. Aucun paiement en ligne n\'est effectué. Le règlement s\'effectue par virement bancaire après signature et retour du présent bulletin. Vos données personnelles sont utilisées exclusivement dans le cadre de cette démarche de souscription et ne sont transmises à aucun tiers.'
+  const legal = 'Vos données personnelles sont utilisées exclusivement dans le cadre de cette démarche de souscription et ne sont transmises à aucun tiers.'
   const splitLegal = doc.splitTextToSize(legal, contentW)
   doc.text(splitLegal, margin, y)
 
