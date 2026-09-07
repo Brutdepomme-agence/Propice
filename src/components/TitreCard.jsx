@@ -3,7 +3,7 @@ import { useState } from 'react'
 const cards = [
   {
     id: 'titres-participatifs',
-    title: 'Titres participatifs',
+    title: 'Promesse de souscription de titres participatifs',
     tag: null,
     min: '300 €',
     tranche: '100 €',
@@ -14,7 +14,7 @@ const cards = [
       { label: 'Intérêts sur 5 ans', value: '300 €' },
       { label: 'Intérêts sur 10 ans', value: '600 €' },
     ],
-    note: 'Soumis à la fiscalité des revenus de capitaux mobiliers (flat tax 30 %).',
+    note: 'Versement sous condition d\'approbation par l\'AG du 1er novembre 2026 de la levée de fonds. Soumis à la flat tax 30 %.',
   },
   {
     id: 'parts-sociales',
@@ -23,13 +23,13 @@ const cards = [
     tagSub: '1 tête = 1 voix, quel que soit le montant investi.',
     min: '100 €',
     tranche: '100 €',
-    avantage: { label: "Déduction d'impôts", value: '25%', sub: '(fonds bloqués 3 ans)' },
+    avantage: { label: "Réduction d'impôts", value: '18%', sub: 'pour toute souscription avant le 31 décembre 2026.' },
     exemple: [
       { label: 'Montant souscrit', value: '2 000 €' },
-      { label: "Réduction d'impôt (25 %)", value: '− 500 €' },
-      { label: 'Coût réel', value: '1 500 €' },
+      { label: "Réduction d'impôt (18 %)", value: '− 360 €' },
+      { label: 'Coût réel', value: '1 640 €' },
     ],
-    note: 'Dispositif IR-PME / Madelin SCIC. Sous réserve d\'éligibilité.',
+    note: 'Dispositif IR-PME. Sous réserve d\'éligibilité.',
   },
 ]
 

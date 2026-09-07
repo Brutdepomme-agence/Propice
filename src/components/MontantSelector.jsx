@@ -45,6 +45,7 @@ export default function MontantSelector({ type, montant, onChange }) {
   const unitLabel = type === 'parts-sociales'
     ? `${nombreParts} part${nombreParts > 1 ? 's' : ''} sociale${nombreParts > 1 ? 's' : ''}`
     : `${nombreParts} titre${nombreParts > 1 ? 's' : ''} participatif${nombreParts > 1 ? 's' : ''}`
+  const unitVerb = type === 'parts-sociales' ? 'souscrivez' : 'promettez de souscrire'
 
   const progressPct = objectifTotal > 0
     ? Math.min(100, Math.round(((totalSouscrit + montant) / objectifTotal) * 100))
@@ -96,7 +97,7 @@ export default function MontantSelector({ type, montant, onChange }) {
       </div>
 
       <p className="text-center text-sm text-black/50">
-        Vous souscrivez <strong className="text-[#111111]">{unitLabel}</strong>
+        Vous {unitVerb} <strong className="text-[#111111]">{unitLabel}</strong>
       </p>
 
       {objectifTotal > 0 && (

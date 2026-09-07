@@ -10,7 +10,7 @@ export function generateBulletin(data) {
   const IBAN = import.meta.env.VITE_IBAN || 'FR76 XXXX XXXX XXXX XXXX XXXX XXX'
   const EMAIL = import.meta.env.VITE_EMAIL_CONTACT || 'contact@propice.bzh'
 
-  const typeLabel = data.type === 'parts-sociales' ? 'PARTS SOCIALES' : 'TITRES PARTICIPATIFS'
+  const typeLabel = data.type === 'parts-sociales' ? 'PARTS SOCIALES' : 'PROMESSE DE SOUSCRIPTION DE TITRES PARTICIPATIFS'
   const refDate = data.dateSouscription.replace(/-/g, '')
   const reference = `${data.nom.toUpperCase()}-${refDate}-${data.type === 'parts-sociales' ? 'PS' : 'TP'}`
   const nombreParts = Math.round(data.montant / 100)
@@ -75,7 +75,7 @@ export function generateBulletin(data) {
   y += 2
 
   section('SOUSCRIPTION')
-  row('Type :', data.type === 'parts-sociales' ? 'Parts sociales' : 'Titres participatifs')
+  row('Type :', data.type === 'parts-sociales' ? 'Parts sociales' : 'Promesse de souscription de titres participatifs')
   row('Nombre :', `${nombreParts} ${data.type === 'parts-sociales' ? 'part(s) sociale(s)' : 'titre(s) participatif(s)'}`)
   row('Montant :', `${data.montant.toLocaleString('fr-FR')} €`)
   y += 2
