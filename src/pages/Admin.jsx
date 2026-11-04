@@ -20,9 +20,22 @@ export default function Admin() {
   const objectifTotal = parseInt(import.meta.env.VITE_OBJECTIF_TOTAL || '0')
 
   useEffect(() => {
-    if (sessionStorage.getItem('propice_admin') === 'ok') {
-      setAuthed(true)
-      loadSubs()
+    const storedPwd = sessionStorage.getItem('propice_admin_pwd')
+    if (sessionStorage.getItem('propice_admin') === 'ok' && storedPwd) {
+      fetch(`/api/subscriptions?pwd=${encodeURIComponent(storedPwd)}`)
+        .then(r => {
+          if (r.status === 401) {
+            sessionStorage.removeItem('propice_admin')
+            sessionStorage.removeItem('propice_admin_pwd')
+            return null
+          }
+          return r.json()
+        })
+        .then(data => { if (data) { setAuthed(true); setSubs(data) } })
+        .catch(() => {
+          sessionStorage.removeItem('propice_admin')
+          sessionStorage.removeItem('propice_admin_pwd')
+        })
     }
   }, [])
 

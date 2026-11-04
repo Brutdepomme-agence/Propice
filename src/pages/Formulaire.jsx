@@ -192,6 +192,22 @@ export default function Formulaire() {
         </div>
 
         <div className="flex-1 px-8 py-6 lg:px-12 lg:py-8">
+          {phase === 'form' && objectifTotal > 0 && (() => {
+            const pct = Math.min(100, Math.round(totalSouscrit / objectifTotal * 100))
+            return (
+              <div className="mb-6 p-4 rounded-2xl bg-white/50 backdrop-blur-sm border border-white/70 shadow-sm">
+                <p className="text-[10px] text-black/40 uppercase tracking-widest font-inter mb-2">Objectif de financement</p>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="font-display font-bold text-2xl text-[#111111]">{totalSouscrit.toLocaleString('fr-FR')} €</span>
+                  <span className="text-xs text-black/40 font-inter">sur {objectifTotal.toLocaleString('fr-FR')} € d'ici décembre</span>
+                </div>
+                <div className="w-full h-2.5 bg-black/8 rounded-full overflow-hidden mt-2">
+                  <div className="h-full bg-[#6195a4] rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
+                </div>
+                <p className="text-[11px] text-black/35 font-inter mt-1.5 text-right font-semibold">{pct}% atteint</p>
+              </div>
+            )
+          })()}
           {phase === 'confirmed' && savedData ? (
             <ConfirmationPage data={savedData} onRestart={handleRestart} />
           ) : phase === 'krypton' ? (
