@@ -3,10 +3,10 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci --omit=dev || npm install --omit=dev
+RUN npm ci || npm install
 
 COPY . .
-RUN npm run build
+RUN npm run build && npm prune --omit=dev
 
 ENV DATA_DIR=/data
 VOLUME ["/data"]
