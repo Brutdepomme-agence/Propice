@@ -85,22 +85,22 @@ export default function TitreCard({ selected, onSelect }) {
               </button>
             </div>
 
-            {/* Avantages — occupe la hauteur restante */}
-            <div className="flex-1 px-5 pb-5 flex flex-col justify-center gap-3">
-              {card.avantages.map((av, i) => (
-                <div
-                  key={i}
-                  className={`rounded-xl px-4 py-3 flex items-center gap-4 ${
-                    i === 0 ? 'bg-white/60' : 'bg-[#6195a4]/10'
-                  }`}
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[10px] text-black/40 font-inter uppercase tracking-wider leading-tight">{av.label}</p>
-                    {av.sub && <p className="text-[10px] text-black/30 font-inter mt-0.5 leading-tight">{av.sub}</p>}
+            {/* Avantages — petites cartes centrées */}
+            <div className="flex-1 px-5 pb-5 flex items-center">
+              <div className="w-full flex gap-3">
+                {card.avantages.map((av, i) => (
+                  <div
+                    key={i}
+                    className={`flex-1 rounded-xl py-4 px-3 text-center ${
+                      i === 0 ? 'bg-white/70' : 'bg-[#6195a4]/10'
+                    }`}
+                  >
+                    <p className="text-[10px] text-black/40 font-inter uppercase tracking-wider leading-tight mb-2">{av.label}</p>
+                    <p className="font-display font-bold text-3xl text-[#111111] leading-none">{av.value}</p>
+                    {av.sub && <p className="text-[9px] text-black/30 font-inter mt-2 leading-snug">{av.sub}</p>}
                   </div>
-                  <p className="font-display font-bold text-3xl text-[#111111] leading-none shrink-0">{av.value}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             {/* Détails dépliables */}
