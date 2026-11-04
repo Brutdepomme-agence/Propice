@@ -3,7 +3,8 @@ import { useState } from 'react'
 const cards = [
   {
     id: 'titres-participatifs',
-    title: 'Promesse de souscription de titres participatifs',
+    title: 'Titre Participatif',
+    titleSub: '(Promesse de souscription)',
     tag: null,
     min: '300 €',
     tranche: '100 €',
@@ -22,8 +23,9 @@ const cards = [
   {
     id: 'parts-sociales',
     title: 'Parts sociales',
-    tag: 'DROIT DE VOTE',
-    tagSub: '1 tête = 1 voix, quel que soit le montant investi.',
+    titleSub: null,
+    tag: null,
+    tagSub: null,
     min: '100 €',
     tranche: '100 €',
     avantages: [
@@ -65,7 +67,10 @@ export default function TitreCard({ selected, onSelect }) {
             {/* En-tête */}
             <div className="px-5 pt-5 pb-3 border-b border-white/40">
               <div className="flex items-center justify-between gap-2">
-                <h3 className="font-display font-bold text-xl text-[#111111]">{card.title}</h3>
+                <div>
+                  <h3 className="font-display font-bold text-xl text-[#111111]">{card.title}</h3>
+                  {card.titleSub && <p className="text-[10px] text-black/40 font-inter mt-0.5">{card.titleSub}</p>}
+                </div>
                 <button
                   onClick={e => toggleExpand(e, card.id)}
                   className={`w-5 h-5 shrink-0 rounded-full border-2 font-bold text-[10px] flex items-center justify-center transition-colors ${

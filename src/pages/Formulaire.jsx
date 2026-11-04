@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import StepIndicator from '../components/StepIndicator'
 import TitreCard from '../components/TitreCard'
 import MontantSelector from '../components/MontantSelector'
@@ -56,6 +56,12 @@ export default function Formulaire() {
 
   const [paymentLoading, setPaymentLoading] = useState(false)
   const [paymentError, setPaymentError] = useState(null)
+  const [totalSouscrit, setTotalSouscrit] = useState(0)
+  const objectifTotal = parseInt(import.meta.env.VITE_OBJECTIF_PHASE1 || '0')
+
+  useEffect(() => {
+    fetch('/api/total').then(r => r.json()).then(d => setTotalSouscrit(d.total || 0)).catch(() => {})
+  }, [])
 
   async function handleConfirm() {
     setPaymentLoading(true)
@@ -141,7 +147,26 @@ export default function Formulaire() {
           </p>
         </div>
 
-        <a href="/admin" className="text-white/25 text-xs hover:text-white/50 transition-colors">Admin</a>
+        <div className="space-y-3">
+          {objectifTotal > 0 && (
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs text-white/50 font-inter">
+                <span>{totalSouscrit.toLocaleString('fr-FR')} € engagés</span>
+                <span>Objectif {objectifTotal.toLocaleString('fr-FR')} €</span>
+              </div>
+              <div className="w-full h-1.5 bg-white/20 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-white rounded-full transition-all duration-700"
+                  style={{ width: `${Math.min(100, Math.round(totalSouscrit / objectifTotal * 100))}%` }}
+                />
+              </div>
+              <p className="text-[11px] text-white/35 font-inter">
+                {Math.round(totalSouscrit / objectifTotal * 100)}% de l'objectif jusqu'en décembre
+              </p>
+            </div>
+          )}
+          <a href="/admin" className="text-white/25 text-xs hover:text-white/50 transition-colors">Admin</a>
+        </div>
       </div>
 
       {/* DROITE — panneau formulaire */}

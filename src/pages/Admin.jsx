@@ -17,7 +17,6 @@ export default function Admin() {
   const [pwd, setPwd] = useState('')
   const [error, setError] = useState('')
   const [subs, setSubs] = useState([])
-  const PASS = import.meta.env.VITE_ADMIN_PASSWORD || 'changeme'
   const objectifTotal = parseInt(import.meta.env.VITE_OBJECTIF_TOTAL || '0')
 
   useEffect(() => {
@@ -39,16 +38,17 @@ export default function Admin() {
     }
   }
 
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault()
-    if (pwd === PASS) {
+    try {
+      const r = await fetch(`/api/subscriptions?pwd=${encodeURIComponent(pwd)}`)
+      if (r.status === 401) { setError('Mot de passe incorrect'); return }
+      const data = await r.json()
       sessionStorage.setItem('propice_admin', 'ok')
       sessionStorage.setItem('propice_admin_pwd', pwd)
       setAuthed(true)
-      loadSubs()
-    } else {
-      setError('Mot de passe incorrect')
-    }
+      setSubs(data)
+    } catch { setError('Erreur de connexion') }
   }
 
   async function handleDelete(id, nom) {

@@ -34,6 +34,12 @@ app.post('/api/save-subscription', (req, res) => {
   res.json({ ok: true })
 })
 
+app.get('/api/total', (req, res) => {
+  const db = readDB()
+  const total = Object.values(db).reduce((acc, s) => acc + (s.montant || 0), 0)
+  res.json({ total })
+})
+
 app.get('/api/subscriptions', (req, res) => {
   if (req.query.pwd !== process.env.ADMIN_PASSWORD) return res.status(401).send('Unauthorized')
   const db = readDB()
