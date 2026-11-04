@@ -7,7 +7,7 @@ export default function MontantSelector({ type, montant, onChange }) {
   const min = type === 'parts-sociales' ? 100 : 300
   const step = 100
   const [inputVal, setInputVal] = useState(String(montant))
-  const objectifTotal = parseInt(import.meta.env.VITE_OBJECTIF_TOTAL || '0')
+  const objectifTotal = parseInt(import.meta.env.VITE_OBJECTIF_PHASE1 || import.meta.env.VITE_OBJECTIF_TOTAL || '0')
   const [totalSouscrit, setTotalSouscrit] = useState(0)
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export default function MontantSelector({ type, montant, onChange }) {
         <div className="mt-4">
           <div className="flex justify-between text-xs text-gray-500 mb-1 font-inter">
             <span>{(totalSouscrit + montant).toLocaleString('fr-FR')} € engagés</span>
-            <span>Objectif : {objectifTotal.toLocaleString('fr-FR')} €</span>
+            <span>Objectif : {objectifTotal.toLocaleString('fr-FR')} € jusqu'en décembre</span>
           </div>
           <div className="w-full h-2 bg-gray-200">
             <div

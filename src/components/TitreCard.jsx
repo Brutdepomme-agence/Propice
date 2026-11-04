@@ -7,7 +7,10 @@ const cards = [
     tag: null,
     min: '300 €',
     tranche: '100 €',
-    avantage: { label: 'Intérêts annuels', value: '3%', sub: '+ une part variable du résultat de la coopérative.' },
+    avantages: [
+      { label: 'Rémunération fixe', value: '3%', sub: '+ une part variable du résultat de la coopérative.' },
+      { label: 'Réduction d\'impôt IR-PME', value: '18 à 25%', sub: 'Sous réserve d\'éligibilité.' },
+    ],
     exemple: [
       { label: 'Montant souscrit', value: '2 000 €' },
       { label: 'Intérêts / an', value: '60 €' },
@@ -23,7 +26,10 @@ const cards = [
     tagSub: '1 tête = 1 voix, quel que soit le montant investi.',
     min: '100 €',
     tranche: '100 €',
-    avantage: { label: "Réduction d'impôts", value: '18%', sub: 'pour toute souscription avant le 31 décembre 2026.' },
+    avantages: [
+      { label: 'Droit de vote', value: '1 voix', sub: '1 tête = 1 voix, quel que soit le montant.' },
+      { label: 'Réduction d\'impôt IR-PME', value: '18 à 25%', sub: 'Sous réserve d\'éligibilité.' },
+    ],
     exemple: [
       { label: 'Montant souscrit', value: '2 000 €' },
       { label: "Réduction d'impôt (18 %)", value: '− 360 €' },
@@ -82,10 +88,14 @@ export default function TitreCard({ selected, onSelect }) {
                   {card.tagSub && <p className="text-[10px] text-black/40 mt-1">{card.tagSub}</p>}
                 </div>
               )}
-              <div className="text-center py-1">
-                <p className="text-xs text-black/40 mb-0.5">{card.avantage.label}</p>
-                <p className="font-display font-bold text-5xl text-[#111111] leading-none">{card.avantage.value}</p>
-                {card.avantage.sub && <p className="text-[10px] text-black/40 mt-1">{card.avantage.sub}</p>}
+              <div className="flex gap-3 py-1">
+                {card.avantages.map((av, i) => (
+                  <div key={i} className={`flex-1 text-center rounded-xl py-2 px-1 ${i === 0 ? 'bg-white/50' : 'bg-[#6195a4]/10'}`}>
+                    <p className="text-[10px] text-black/40 mb-0.5 leading-tight">{av.label}</p>
+                    <p className="font-display font-bold text-2xl text-[#111111] leading-none">{av.value}</p>
+                    {av.sub && <p className="text-[9px] text-black/35 mt-1 leading-tight">{av.sub}</p>}
+                  </div>
+                ))}
               </div>
             </div>
 
