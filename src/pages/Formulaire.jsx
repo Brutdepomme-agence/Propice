@@ -147,24 +147,32 @@ export default function Formulaire() {
           </p>
         </div>
 
-        <div className="space-y-3">
-          {objectifTotal > 0 && (
-            <div className="space-y-1.5">
-              <div className="flex justify-between text-xs text-white/50 font-inter">
-                <span>{totalSouscrit.toLocaleString('fr-FR')} € engagés</span>
-                <span>Objectif {objectifTotal.toLocaleString('fr-FR')} €</span>
+        <div className="space-y-5">
+          {objectifTotal > 0 && (() => {
+            const pct = Math.min(100, Math.round(totalSouscrit / objectifTotal * 100))
+            return (
+              <div className="space-y-3">
+                <div>
+                  <p className="text-white/50 text-xs font-inter uppercase tracking-widest mb-1">Objectif de financement</p>
+                  <p className="font-display font-bold text-white leading-none" style={{ fontSize: 'clamp(2rem, 3vw, 2.8rem)' }}>
+                    {totalSouscrit.toLocaleString('fr-FR')} €
+                  </p>
+                  <p className="text-white/40 text-sm font-inter mt-1">
+                    sur {objectifTotal.toLocaleString('fr-FR')} € à réunir d'ici décembre
+                  </p>
+                </div>
+                <div className="space-y-1.5">
+                  <div className="w-full h-3 bg-white/15 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-white rounded-full transition-all duration-700"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                  <p className="text-white/50 text-xs font-inter font-semibold">{pct}% atteint</p>
+                </div>
               </div>
-              <div className="w-full h-1.5 bg-white/20 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-white rounded-full transition-all duration-700"
-                  style={{ width: `${Math.min(100, Math.round(totalSouscrit / objectifTotal * 100))}%` }}
-                />
-              </div>
-              <p className="text-[11px] text-white/35 font-inter">
-                {Math.round(totalSouscrit / objectifTotal * 100)}% de l'objectif jusqu'en décembre
-              </p>
-            </div>
-          )}
+            )
+          })()}
           <a href="/admin" className="text-white/25 text-xs hover:text-white/50 transition-colors">Admin</a>
         </div>
       </div>

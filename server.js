@@ -36,7 +36,8 @@ app.post('/api/save-subscription', (req, res) => {
 
 app.get('/api/total', (req, res) => {
   const db = readDB()
-  const total = Object.values(db).reduce((acc, s) => acc + (s.montant || 0), 0)
+  const initial = parseInt(process.env.MONTANT_INITIAL || '0')
+  const total = initial + Object.values(db).reduce((acc, s) => acc + (s.montant || 0), 0)
   res.json({ total })
 })
 
