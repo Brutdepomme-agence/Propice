@@ -126,7 +126,7 @@ app.post('/api/payzen-webhook', express.text({ type: '*/*' }), (req, res) => {
 
 // --- Serveur statique (fichiers buildés par Vite) ---
 app.use(express.static(join(__dirname, 'dist')))
-app.get('*', (req, res) => {
+app.get('/{*splat}', (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'))
 })
 
