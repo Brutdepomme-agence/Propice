@@ -6,6 +6,7 @@ import CoordForm from '../components/CoordForm'
 import Recapitulatif from '../components/Recapitulatif'
 import ConfirmationPage from '../components/ConfirmationPage'
 import KryptonForm from '../components/KryptonForm'
+import Simulateur from '../components/Simulateur'
 import { saveSubscription } from '../utils/storage'
 import { generateBulletin } from '../utils/generatePDF'
 
@@ -229,6 +230,9 @@ export default function Formulaire() {
                     montant={formData.montant}
                     onChange={montant => setFormData(d => ({ ...d, montant }))}
                   />
+                  <div className="rounded-2xl bg-black/3 border border-black/8 p-4">
+                    <Simulateur type={formData.type} montantControlled={formData.montant} />
+                  </div>
                   <button
                     onClick={() => setStep(3)}
                     className="w-full bg-[#111111] text-white font-display font-bold text-base py-4 tracking-widest hover:bg-[#6195a4] transition-colors"
