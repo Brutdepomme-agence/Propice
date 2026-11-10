@@ -22,7 +22,7 @@ export default function Simulateur({ type, montantInitial, montantControlled }) 
     const interets7ans = interetsAn * 7
     const reductionIR = Math.round(m * 0.18)
     const totalRemu = interets7ans + reductionIR
-    const remuAn = Math.round(totalRemu / 7)
+    const remuPctAn = m > 0 ? ((totalRemu / 7 / m) * 100).toFixed(1).replace('.', ',') : '0'
 
     return (
       <div>
@@ -45,7 +45,7 @@ export default function Simulateur({ type, montantInitial, montantControlled }) 
           <Row label="Intérêts / an (3%)" value={`${interetsAn.toLocaleString('fr-FR')} €`} />
           <Row label="Intérêts sur 7 ans" value={`${interets7ans.toLocaleString('fr-FR')} €`} />
           <Row label="Réduction IR (18%)" value={`− ${reductionIR.toLocaleString('fr-FR')} €`} highlight />
-          <Row label="Moyenne / an" value={`${remuAn.toLocaleString('fr-FR')} €`} highlight />
+          <Row label="Rendement moyen / an" value={`${remuPctAn} %`} highlight />
         </div>
         <div className="flex justify-between items-center border-t border-black/10 mt-1.5 pt-1.5">
           <span className="text-[11px] font-semibold text-black/60 font-inter">Total avantage sur 7 ans</span>
@@ -58,7 +58,7 @@ export default function Simulateur({ type, montantInitial, montantControlled }) 
 
   // Parts sociales
   const reductionIR = Math.round(m * 0.18)
-  const remuAn = Math.round(reductionIR / 7)
+  const remuPctAn = m > 0 ? ((reductionIR / 7 / m) * 100).toFixed(1).replace('.', ',') : '0'
 
   return (
     <div>
@@ -81,7 +81,7 @@ export default function Simulateur({ type, montantInitial, montantControlled }) 
         <Row label="Droit de vote" value="Oui" />
         <Row label="Intérêts / an" value="0 €" />
         <Row label="Réduction IR (18%)" value={`− ${reductionIR.toLocaleString('fr-FR')} €`} highlight />
-        <Row label="Moyenne / an (7 ans)" value={`${remuAn.toLocaleString('fr-FR')} €`} highlight />
+        <Row label="Rendement moyen / an" value={`${remuPctAn} %`} highlight />
       </div>
       <div className="flex justify-between items-center border-t border-black/10 mt-1.5 pt-1.5">
         <span className="text-[11px] font-semibold text-black/60 font-inter">Avantage total</span>
