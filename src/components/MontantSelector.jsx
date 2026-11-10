@@ -38,12 +38,12 @@ export default function MontantSelector({ type, montant, onChange }) {
   const unitVerb = type === 'parts-sociales' ? 'souscrivez' : 'promettez de souscrire'
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-center gap-6">
+    <div className="space-y-4">
+      <div className="flex items-center justify-center gap-5">
         <button
           onClick={decrement}
           disabled={montant <= min}
-          className="w-12 h-12 border-2 border-[#111111] text-[#111111] font-display text-2xl disabled:opacity-30 hover:bg-[#111111] hover:text-white transition-colors"
+          className="w-10 h-10 border-2 border-[#111111] text-[#111111] font-display text-2xl disabled:opacity-30 hover:bg-[#111111] hover:text-white transition-colors"
         >
           −
         </button>
@@ -53,13 +53,13 @@ export default function MontantSelector({ type, montant, onChange }) {
             value={inputVal}
             onChange={e => setInputVal(e.target.value)}
             onBlur={handleBlur}
-            className="font-display text-6xl text-center text-[#111111] w-48 bg-transparent border-b-2 border-[#111111] outline-none"
+            className="font-display text-5xl text-center text-[#111111] w-40 bg-transparent border-b-2 border-[#111111] outline-none"
           />
-          <span className="font-display text-3xl text-[#111111] ml-1">€</span>
+          <span className="font-display text-2xl text-[#111111] ml-1">€</span>
         </div>
         <button
           onClick={increment}
-          className="w-12 h-12 border-2 border-[#111111] text-[#111111] font-display text-2xl hover:bg-[#111111] hover:text-white transition-colors"
+          className="w-10 h-10 border-2 border-[#111111] text-[#111111] font-display text-2xl hover:bg-[#111111] hover:text-white transition-colors"
         >
           +
         </button>

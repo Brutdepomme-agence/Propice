@@ -216,7 +216,7 @@ export default function Formulaire() {
               )}
 
               {step === 2 && (
-                <div className="space-y-8">
+                <div className="space-y-5">
                   <div>
                     <h2 className="font-display font-bold text-2xl text-[#111111]">DÉFINISSEZ LE MONTANT</h2>
                     <p className="text-black/40 text-xs mt-1">
@@ -230,7 +230,7 @@ export default function Formulaire() {
                     montant={formData.montant}
                     onChange={montant => setFormData(d => ({ ...d, montant }))}
                   />
-                  <div className="rounded-2xl bg-black/3 border border-black/8 p-4">
+                  <div className="rounded-2xl bg-black/3 border border-black/8 px-4 py-3">
                     <Simulateur type={formData.type} montantControlled={formData.montant} />
                   </div>
                   <button
