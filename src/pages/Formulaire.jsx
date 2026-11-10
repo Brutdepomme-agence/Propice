@@ -12,25 +12,25 @@ import { generateBulletin } from '../utils/generatePDF'
 
 const stepContent = [
   {
-    title: `Le moment\nPropice pour\ninvestir local\net solidaire.`,
+    title: `Investissez local,\ninvestissez\nsolidaire.`,
     sub: `Plus de 4 millions d'euros déjà levés. Il reste la dernière ligne droite.`,
   },
   {
-    title: `Chaque euro\nrapproche\nPropice de\nl'ouverture.`,
+    title: `Choisissez\nvotre montant\nd'engagement.`,
     sub: `Devenez copropriétaire d'un projet coopératif de territoire.`,
   },
   {
-    title: `Vous rejoignez\nune communauté\nde sociétaires\nengagés.`,
+    title: `Vous rejoignez\nune coopérative\nde territoire.`,
     sub: `Belle-Île vous attendait. Propice vous accueille.`,
   },
   {
-    title: `Plus qu'un\ngeste. Un acte\nfondateur.`,
+    title: `Plus qu'un geste,\nun acte\nfondateur.`,
     sub: `Vérifiez vos informations avant de confirmer votre souscription.`,
   },
 ]
 
 const confirmedContent = {
-  title: `Bienvenue\ndans\nl'aventure\nPropice.`,
+  title: `Bienvenue\ndans l'aventure\nPropice.`,
   sub: `Votre engagement compte. À très vite sur l'île.`,
 }
 
