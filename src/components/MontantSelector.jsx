@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { getSubscriptions } from '../utils/storage'
 
 const PRESETS = [500, 1000, 3000, 5000]
 
@@ -7,15 +6,6 @@ export default function MontantSelector({ type, montant, onChange }) {
   const min = type === 'parts-sociales' ? 100 : 300
   const step = 100
   const [inputVal, setInputVal] = useState(String(montant))
-  const objectifTotal = parseInt(import.meta.env.VITE_OBJECTIF_PHASE1 || import.meta.env.VITE_OBJECTIF_TOTAL || '0')
-  const [totalSouscrit, setTotalSouscrit] = useState(0)
-
-  useEffect(() => {
-    if (objectifTotal > 0) {
-      const subs = getSubscriptions()
-      setTotalSouscrit(subs.reduce((acc, s) => acc + (s.montant || 0), 0))
-    }
-  }, [])
 
   useEffect(() => {
     setInputVal(String(montant))
@@ -46,10 +36,6 @@ export default function MontantSelector({ type, montant, onChange }) {
     ? `${nombreParts} part${nombreParts > 1 ? 's' : ''} sociale${nombreParts > 1 ? 's' : ''}`
     : `${nombreParts} titre${nombreParts > 1 ? 's' : ''} participatif${nombreParts > 1 ? 's' : ''}`
   const unitVerb = type === 'parts-sociales' ? 'souscrivez' : 'promettez de souscrire'
-
-  const progressPct = objectifTotal > 0
-    ? Math.min(100, Math.round(((totalSouscrit + montant) / objectifTotal) * 100))
-    : 0
 
   return (
     <div className="space-y-6">
@@ -100,21 +86,6 @@ export default function MontantSelector({ type, montant, onChange }) {
         Vous {unitVerb} <strong className="text-[#111111]">{unitLabel}</strong>
       </p>
 
-      {objectifTotal > 0 && (
-        <div className="mt-4">
-          <div className="flex justify-between text-xs text-gray-500 mb-1 font-inter">
-            <span>{(totalSouscrit + montant).toLocaleString('fr-FR')} € engagés</span>
-            <span>Objectif : {objectifTotal.toLocaleString('fr-FR')} € jusqu'en décembre</span>
-          </div>
-          <div className="w-full h-2 bg-gray-200">
-            <div
-              className="h-2 bg-[#6195a4] transition-all"
-              style={{ width: `${progressPct}%` }}
-            />
-          </div>
-          <p className="text-xs text-right text-gray-500 mt-1 font-inter">{progressPct}% de l'objectif</p>
-        </div>
-      )}
     </div>
   )
 }
