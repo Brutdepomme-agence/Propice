@@ -17,7 +17,7 @@ const stepContent = [
   },
   {
     title: `Chaque euro\nrapproche\nPropice de\nl'ouverture.`,
-    sub: `Votre investissement boucle le financement et ouvre les portes du lieu.`,
+    sub: `Devenez copropriétaire d'un projet coopératif de territoire.`,
   },
   {
     title: `Vous rejoignez\nune communauté\nde sociétaires\nengagés.`,
