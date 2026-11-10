@@ -12,13 +12,8 @@ const cards = [
       { label: 'Rémunération fixe', value: '3%', sub: '+ une part variable du résultat de la coopérative.' },
       { label: 'Réduction d\'impôt IR-PME', value: '18 à 25%', sub: 'Sous réserve d\'éligibilité.' },
     ],
-    exemple: [
-      { label: 'Montant souscrit', value: '2 000 €' },
-      { label: 'Intérêts / an', value: '60 €' },
-      { label: 'Intérêts sur 5 ans', value: '300 €' },
-      { label: 'Intérêts sur 10 ans', value: '600 €' },
-    ],
     note: 'Versement sous condition d\'approbation par l\'AG du 1er novembre 2026 de la levée de fonds. Soumis à la flat tax 30 %.',
+    type: 'tp',
   },
   {
     id: 'parts-sociales',
@@ -32,14 +27,107 @@ const cards = [
       { label: 'Droit de vote', value: '1 voix', sub: '1 tête = 1 voix, quel que soit le montant.' },
       { label: 'Réduction d\'impôt IR-PME', value: '18 à 25%', sub: 'Sous réserve d\'éligibilité.' },
     ],
-    exemple: [
-      { label: 'Montant souscrit', value: '2 000 €' },
-      { label: "Réduction d'impôt (18 %)", value: '− 360 €' },
-      { label: 'Coût réel', value: '1 640 €' },
-    ],
     note: 'Dispositif IR-PME. Sous réserve d\'éligibilité.',
+    type: 'ps',
   },
 ]
+
+function Simulateur({ type, montantInitial }) {
+  const [montant, setMontant] = useState(montantInitial || 2000)
+  const m = Math.max(0, parseInt(montant) || 0)
+
+  if (type === 'tp') {
+    const interetsAn = Math.round(m * 0.03)
+    const interets7ans = interetsAn * 7
+    const reductionIR = Math.round(m * 0.18)
+    const totalRemu = interets7ans + reductionIR
+    const remuAn = Math.round(totalRemu / 7)
+
+    return (
+      <div className="px-5 pb-5 pt-3 border-t border-white/50 space-y-3">
+        <p className="font-display font-bold text-[10px] tracking-widest text-black/35 uppercase mb-3">Simulateur</p>
+        <div className="flex justify-between items-center">
+          <span className="text-xs text-black/45 font-inter">Montant souscrit</span>
+          <div className="flex items-center gap-1">
+            <input
+              type="number"
+              value={montant}
+              onChange={e => setMontant(e.target.value)}
+              onClick={e => e.stopPropagation()}
+              className="w-20 text-right text-xs font-bold text-[#111111] font-display bg-black/5 rounded px-2 py-1 outline-none focus:bg-[#6195a4]/10"
+            />
+            <span className="text-xs text-black/45">€</span>
+          </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-xs text-black/45 font-inter">Intérêts / an (3%)</span>
+          <span className="text-xs font-bold text-[#111111] font-display">{interetsAn.toLocaleString('fr-FR')} €</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-xs text-black/45 font-inter">Intérêts sur 7 ans</span>
+          <span className="text-xs font-bold text-[#111111] font-display">{interets7ans.toLocaleString('fr-FR')} €</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-xs text-black/45 font-inter">Réduction d'impôt IR (18%)</span>
+          <span className="text-xs font-bold text-[#6195a4] font-display">− {reductionIR.toLocaleString('fr-FR')} €</span>
+        </div>
+        <div className="border-t border-black/10 pt-2 flex justify-between items-center">
+          <span className="text-xs font-semibold text-black/60 font-inter">Total sur 7 ans</span>
+          <span className="text-sm font-bold text-[#111111] font-display">{totalRemu.toLocaleString('fr-FR')} €</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-xs text-black/45 font-inter">Soit en moyenne / an</span>
+          <span className="text-xs font-bold text-[#6195a4] font-display">{remuAn.toLocaleString('fr-FR')} €</span>
+        </div>
+        <p className="text-[9px] text-black/25 italic leading-relaxed font-inter pt-1">IR-PME sous réserve d'éligibilité. Flat tax 30% sur les intérêts.</p>
+      </div>
+    )
+  }
+
+  // Parts sociales
+  const reductionIR = Math.round(m * 0.18)
+  const remuAn = Math.round(reductionIR / 7)
+
+  return (
+    <div className="px-5 pb-5 pt-3 border-t border-white/50 space-y-3">
+      <p className="font-display font-bold text-[10px] tracking-widest text-black/35 uppercase mb-3">Simulateur</p>
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-black/45 font-inter">Montant souscrit</span>
+        <div className="flex items-center gap-1">
+          <input
+            type="number"
+            value={montant}
+            onChange={e => setMontant(e.target.value)}
+            onClick={e => e.stopPropagation()}
+            className="w-20 text-right text-xs font-bold text-[#111111] font-display bg-black/5 rounded px-2 py-1 outline-none focus:bg-[#6195a4]/10"
+          />
+          <span className="text-xs text-black/45">€</span>
+        </div>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-black/45 font-inter">Intérêts / an</span>
+        <span className="text-xs font-bold text-[#111111] font-display">0 €</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-black/45 font-inter">Droit de vote</span>
+        <span className="text-xs font-bold text-[#111111] font-display">Oui</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-black/45 font-inter">Réduction d'impôt IR (18%)</span>
+        <span className="text-xs font-bold text-[#6195a4] font-display">− {reductionIR.toLocaleString('fr-FR')} €</span>
+      </div>
+      <div className="border-t border-black/10 pt-2 flex justify-between items-center">
+        <span className="text-xs font-semibold text-black/60 font-inter">Avantage total</span>
+        <span className="text-sm font-bold text-[#111111] font-display">{reductionIR.toLocaleString('fr-FR')} €</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-black/45 font-inter">Soit en moyenne / an (7 ans)</span>
+        <span className="text-xs font-bold text-[#6195a4] font-display">{remuAn.toLocaleString('fr-FR')} €</span>
+      </div>
+      <p className="text-[9px] text-black/25 italic leading-relaxed font-inter pt-1">IR-PME sous réserve d'éligibilité. Capital récupérable à la sortie.</p>
+    </div>
+  )
+}
 
 export default function TitreCard({ selected, onSelect }) {
   const [expanded, setExpanded] = useState(null)
@@ -103,21 +191,12 @@ export default function TitreCard({ selected, onSelect }) {
               </div>
             </div>
 
-            {/* Détails dépliables */}
+            {/* Simulateur dépliable */}
             <div
               className="overflow-hidden transition-all duration-300 ease-in-out"
-              style={{ maxHeight: isExpanded ? '220px' : '0px' }}
+              style={{ maxHeight: isExpanded ? '400px' : '0px' }}
             >
-              <div className="px-5 pb-5 pt-3 border-t border-white/50 space-y-2">
-                <p className="font-display font-bold text-[10px] tracking-widest text-black/35 uppercase mb-3">Exemple pour 2 000 €</p>
-                {card.exemple.map(row => (
-                  <div key={row.label} className="flex justify-between items-center">
-                    <span className="text-xs text-black/45 font-inter">{row.label}</span>
-                    <span className="text-xs font-bold text-[#111111] font-display">{row.value}</span>
-                  </div>
-                ))}
-                <p className="text-[10px] text-black/30 italic pt-2 leading-relaxed font-inter">{card.note}</p>
-              </div>
+              {isExpanded && <Simulateur type={card.type} montantInitial={2000} />}
             </div>
           </div>
         )

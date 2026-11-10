@@ -37,7 +37,7 @@ app.post('/api/save-subscription', (req, res) => {
 app.get('/api/total', (req, res) => {
   const db = readDB()
   const initial = parseInt(process.env.MONTANT_INITIAL || '0')
-  const total = initial + Object.values(db).reduce((acc, s) => acc + (s.montant || 0), 0)
+  const total = initial + Object.values(db).filter(s => s.statut !== 'EN ATTENTE').reduce((acc, s) => acc + (s.montant || 0), 0)
   res.json({ total })
 })
 
@@ -75,7 +75,10 @@ app.post('/api/create-payment', async (req, res) => {
   const body = {
     amount: amount * 100,
     currency: 'EUR',
-    orderId,
+    orderId: `SOUSCRIPTION-${orderId}`,
+    orderDetails: {
+      orderDescription: 'Souscription PROPICE — titre participatif / part sociale',
+    },
     customer: {
       email: customer.email,
       billingDetails: {
@@ -116,7 +119,8 @@ app.post('/api/payzen-webhook', express.text({ type: '*/*' }), (req, res) => {
   if (expectedHash !== krHash) return res.status(400).send('Invalid signature')
 
   const answer = JSON.parse(krAnswer)
-  const orderId = answer.orderDetails?.orderId
+  const rawOrderId = answer.orderDetails?.orderId || ''
+  const orderId = rawOrderId.replace(/^SOUSCRIPTION-/, '')
   const isPaid = answer.orderStatus === 'PAID'
   const transactionId = answer.transactions?.[0]?.uuid
   const paidAt = new Date().toISOString()

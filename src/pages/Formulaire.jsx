@@ -149,27 +149,19 @@ export default function Formulaire() {
 
         <div className="space-y-5">
           {objectifTotal > 0 && (() => {
-            const pct = Math.min(100, Math.round(totalSouscrit / objectifTotal * 100))
+            const montantAffiché = totalSouscrit + (phase === 'form' && step >= 2 ? (formData.montant || 0) : 0)
+            const pct = Math.min(100, Math.round(montantAffiché / objectifTotal * 100))
             return (
-              <div className="space-y-3">
-                <div>
-                  <p className="text-white/50 text-xs font-inter uppercase tracking-widest mb-1">Objectif de financement</p>
-                  <p className="font-display font-bold text-white leading-none" style={{ fontSize: 'clamp(2rem, 3vw, 2.8rem)' }}>
-                    {totalSouscrit.toLocaleString('fr-FR')} €
-                  </p>
-                  <p className="text-white/40 text-sm font-inter mt-1">
-                    sur {objectifTotal.toLocaleString('fr-FR')} € à réunir d'ici décembre
-                  </p>
+              <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+                <p className="text-white/50 text-[10px] font-inter uppercase tracking-widest mb-3">Objectif de financement</p>
+                <p className="font-display font-bold text-white leading-none mb-1" style={{ fontSize: 'clamp(1.8rem, 2.8vw, 2.5rem)' }}>
+                  {montantAffiché.toLocaleString('fr-FR')} €
+                </p>
+                <p className="text-white/40 text-xs font-inter mb-3">sur {objectifTotal.toLocaleString('fr-FR')} € à réunir</p>
+                <div className="w-full h-2.5 bg-white/15 rounded-full overflow-hidden">
+                  <div className="h-full bg-white rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
                 </div>
-                <div className="space-y-1.5">
-                  <div className="w-full h-3 bg-white/15 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-white rounded-full transition-all duration-700"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                  <p className="text-white/50 text-xs font-inter font-semibold">{pct}% atteint</p>
-                </div>
+                <p className="text-white/50 text-[11px] font-inter font-semibold mt-1.5">{pct}% atteint</p>
               </div>
             )
           })()}
@@ -192,22 +184,6 @@ export default function Formulaire() {
         </div>
 
         <div className="flex-1 px-8 py-6 lg:px-12 lg:py-8">
-          {phase === 'form' && objectifTotal > 0 && (() => {
-            const pct = Math.min(100, Math.round(totalSouscrit / objectifTotal * 100))
-            return (
-              <div className="mb-6 p-4 rounded-2xl bg-white/50 backdrop-blur-sm border border-white/70 shadow-sm">
-                <p className="text-[10px] text-black/40 uppercase tracking-widest font-inter mb-2">Objectif de financement</p>
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span className="font-display font-bold text-2xl text-[#111111]">{totalSouscrit.toLocaleString('fr-FR')} €</span>
-                  <span className="text-xs text-black/40 font-inter">sur {objectifTotal.toLocaleString('fr-FR')} € d'ici décembre</span>
-                </div>
-                <div className="w-full h-2.5 bg-black/8 rounded-full overflow-hidden mt-2">
-                  <div className="h-full bg-[#6195a4] rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
-                </div>
-                <p className="text-[11px] text-black/35 font-inter mt-1.5 text-right font-semibold">{pct}% atteint</p>
-              </div>
-            )
-          })()}
           {phase === 'confirmed' && savedData ? (
             <ConfirmationPage data={savedData} onRestart={handleRestart} />
           ) : phase === 'krypton' ? (
