@@ -60,8 +60,14 @@ export default function Formulaire() {
   const [totalSouscrit, setTotalSouscrit] = useState(0)
   const objectifTotal = parseInt(import.meta.env.VITE_OBJECTIF_PHASE1 || '0')
 
-  useEffect(() => {
+  function fetchTotal() {
     fetch('/api/total').then(r => r.json()).then(d => setTotalSouscrit(d.total || 0)).catch(() => {})
+  }
+
+  useEffect(() => {
+    fetchTotal()
+    const interval = setInterval(fetchTotal, 30000)
+    return () => clearInterval(interval)
   }, [])
 
   async function handleConfirm() {
@@ -108,6 +114,7 @@ export default function Formulaire() {
     generateBulletin(sub)
     setSavedData(sub)
     setPhase('confirmed')
+    fetchTotal()
   }
 
   function handleRestart() {
