@@ -34,7 +34,7 @@ export default function KryptonForm({ formToken, onSuccess, onError, onCancel })
     script.setAttribute('kr-post-url-success', 'loaded')
     script.onload = () => {
       if (window.KR) {
-        window.KR.setFormConfig({ formToken, language: 'fr-FR' })
+        window.KR.setFormConfig({ publicKey, formToken, language: 'fr-FR' })
         window.KR.onSubmit(handler => {
           const answer = handler.clientAnswer
           if (answer.orderStatus === 'PAID') {
